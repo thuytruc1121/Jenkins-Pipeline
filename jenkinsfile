@@ -1,42 +1,27 @@
-pipeline {
+pipeline{
     agent any
-    environment {
-        DIRECTORY_PATH = "Path: http://..."
-        TESTING_ENVIRONMENT = "Environment"
-        PRODUCTION_ENVIRONMENT = "MINH THUY TRUC PHAM"
-    }
-    stages {
-        stage('Build') {
-            steps {
-                echo "Fetch the source code from the directory path $DIRECTORY_PATH specified by the environment variable $TESTING_ENVIRONMENT!"
-                echo "Compile the code and generate any necessary artifacts."
+    stages{
+        stage("Build"){
+            steps{
+                echo "Building..."
             }
-        }
-        stage('Test') {
-            steps {
-                echo "Unit tests"
-                echo "Integration tests"
+            post{
+                always{
+                    mail to: "pm.thuytruc@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build log attached"
+                }
+                stage("Test"){
+                    steps{
+                        echo "Testing ..."
+                    }
+                }
+                stage("Deploy"){
+                    steps{
+                        echo "Deploying..."
+                    }
+                }
             }
-        }
-        stage('Code Quality Check') {
-            steps {
-                echo "Check the quality of the code!"
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo "Deploy the application to a testing environment $TESTING_ENVIRONMENT specified by the environment variable."
-            }   
-        }
-        stage('Approval') {
-            steps {
-                sleep(10) // Simulate manual approval by pausing for 10 seconds
-            }   
-        }
-        stage('Deploy to Production') {
-            steps {
-                echo "Deploy the code to the production environment $PRODUCTION_ENVIRONMENT using the environment variable."
-            }   
         }
     }
 }
