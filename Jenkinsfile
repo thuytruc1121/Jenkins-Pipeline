@@ -16,16 +16,16 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "pm.thuytruc@gmail.com",
-                         subject: "Unit and Integration Tests Passed",
-                         body: "The Unit and Integration Tests stage completed successfully. Logs are attached.",
-                         attachLog: true
+                    emailext to: 'pm.thuytruc@gmail.com',
+                             subject: "Unit and Integration Tests: SUCCESS",
+                             body: "Unit and integration tests passed successfully.",
+                             attachLog: true
                 }
                 failure {
-                    mail to: "pm.thuytruc@gmail.com",
-                         subject: "Unit and Integration Tests Failed",
-                         body: "The Unit and Integration Tests stage failed. Logs are attached.",
-                         attachLog: true
+                    emailext to: 'pm.thuytruc@gmail.com',
+                             subject: "Unit and Integration Tests: FAILURE",
+                             body: "Unit and integration tests failed.",
+                             attachLog: true
                 }
             }
         }
@@ -46,16 +46,16 @@ pipeline {
             }
             post {
                 success {
-                    mail to: "pm.thuytruc@gmail.com",
-                         subject: "Security Scan Passed",
-                         body: "The Security Scan stage completed successfully. Logs are attached.",
-                         attachLog: true
+                    emailext to: 'pm.thuytruc@gmail.com',
+                             subject: "Security Scan: SUCCESS",
+                             body: "Security scan completed successfully.",
+                             attachLog: true
                 }
                 failure {
-                    mail to: "pm.thuytruc@gmail.com",
-                         subject: "Security Scan Failed",
-                         body: "The Security Scan stage failed. Logs are attached.",
-                         attachLog: true
+                    emailext to: 'pm.thuytruc@gmail.com',
+                             subject: "Security Scan: FAILURE",
+                             body: "Security scan failed.",
+                             attachLog: true
                 }
             }
         }
@@ -85,7 +85,7 @@ pipeline {
     }
     post {
         always {
-            mail to: "pm.thuytruc@gmail.com",
+            emailext to: "pm.thuytruc@gmail.com",
                  subject: "Build Status Email",
                  body: "Build log attached",
                  attachLog: true
