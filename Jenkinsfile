@@ -16,11 +16,12 @@ pipeline {
             }
             post {
                 success {
-                    emailext 
-                    to: "pm.thuytruc@gmail.com",
-                    subject: "Security Scan: SUCCESS",
-                    body: "Security scan completed successfully.",
-                    attachLog: true
+                    emailext (  // Added closing parenthesis here
+                        to: "pm.thuytruc@gmail.com",
+                        subject: "Security Scan: SUCCESS",
+                        body: "Security scan completed successfully.",
+                        attachLog: true
+                    )
                 }
             }
         }
