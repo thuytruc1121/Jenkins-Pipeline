@@ -14,6 +14,20 @@ pipeline {
             steps {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
+            post {
+                success {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Unit and Integration Tests Passed",
+                         body: "The Unit and Integration Tests stage completed successfully. Logs are attached.",
+                         attachLog: true
+                }
+                failure {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Unit and Integration Tests Failed",
+                         body: "The Unit and Integration Tests stage failed. Logs are attached.",
+                         attachLog: true
+                }
+            }
         }
 
         // Stage 3: Code Analysis
@@ -29,6 +43,20 @@ pipeline {
             steps {
                 echo "Performing security scan using OWASP ZAP: sh 'zap-cli -t http://localhost:8080'"
                 // Use ZAP for security scanning
+            }
+            post {
+                success {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Security Scan Passed",
+                         body: "The Security Scan stage completed successfully. Logs are attached.",
+                         attachLog: true
+                }
+                failure {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Security Scan Failed",
+                         body: "The Security Scan stage failed. Logs are attached.",
+                         attachLog: true
+                }
             }
         }
 
@@ -59,7 +87,8 @@ pipeline {
         always {
             mail to: "pm.thuytruc@gmail.com",
                  subject: "Build Status Email",
-                 body: "Build log attached"
+                 body: "Build log attached",
+                 attachLog: true
         }
     }
 }
