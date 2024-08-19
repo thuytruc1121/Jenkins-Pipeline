@@ -17,16 +17,17 @@ pipeline {
             post {
                 success {
                     mail(
-                        bcc: '',
-                        body: "<p>The Test stage completed successfully.</p>",
-                        cc: '',
-                        charset: 'UTF-8',
-                        from: '',
-                        mimeType: 'text/html',
-                        replyTo: '',
-                        subject: "Test Stage: SUCCESS",
-                        to: "pm.thuytruc@gmail.com"
-)
+                            bcc: '',
+                            body: "<p>The Test stage completed successfully.</p>",
+                            cc: '',
+                            charset: 'UTF-8',
+                            from: '',
+                            mimeType: 'text/html',
+                            replyTo: '',
+                            subject: "Test Stage: SUCCESS",
+                            to: "pm.thuytruc@gmail.com",
+                            attachments: '**/test.log'
+                        )
                 }
                 failure {
                     emailext (
