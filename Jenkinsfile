@@ -16,12 +16,18 @@ pipeline {
             }
             post {
                 always {
-                    emailext (
-                        subject: "Security Scan: SUCCESS",
-                        body: "Security scan completed successfully.",
-                        to: "pm.thuytruc@gmail.com",
-                        attachLog: true
-                    )
+                    script {
+                        try {
+                            emailext (
+                                subject: "Unit and Integration Tests: SUCCESS",
+                                body: "Tests completed successfully.",
+                                to: "pm.thuytruc@gmail.com",
+                                attachLog: true
+                            )
+                        } catch (Exception e) {
+                            echo "Failed to send email: ${e.message}"
+                        }
+                    }
                 }
             }
         }
