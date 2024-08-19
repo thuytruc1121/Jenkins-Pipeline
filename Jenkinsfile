@@ -15,19 +15,11 @@ pipeline {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
             post {
-                success {
+                always {
                     emailext (
+                        subject: "Security Scan: SUCCESS",
+                        body: "Security scan completed successfully.",
                         to: "pm.thuytruc@gmail.com",
-                        subject: "Unit and Integration Tests: SUCCESS",
-                        body: "Unit and integration tests completed successfully.",
-                        attachLog: true
-                    )
-                }
-                failure {
-                    emailext (
-                        to: "pm.thuytruc@gmail.com",
-                        subject: "Unit and Integration Tests: FAILURE",
-                        body: "Unit and integration tests failed. Please check the attached build log for details.",
                         attachLog: true
                     )
                 }
