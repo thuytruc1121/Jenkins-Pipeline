@@ -16,18 +16,12 @@ pipeline {
             }
             post {
                 success {
-                    emailext to: 'pm.thuytruc@gmail.com',
-                             subject: "Unit and Integration Tests: SUCCESS",
-                             body: "Unit and integration tests passed successfully.",
-                             attachLog: true
+                    emailext
+                        to: 'pm.thuytruc@gmail.com',
+                        subject: "Security Scan: SUCCESS",
+                        body: "Security scan completed successfully.",
+                        attachLog: true
                 }
-                failure {
-                    emailext to: 'pm.thuytruc@gmail.com',
-                             subject: "Unit and Integration Tests: FAILURE",
-                             body: "Unit and integration tests failed.",
-                             attachLog: true
-                }
-            }
         }
 
         // Stage 3: Code Analysis
@@ -43,20 +37,6 @@ pipeline {
             steps {
                 echo "Performing security scan using OWASP ZAP: sh 'zap-cli -t http://localhost:8080'"
                 // Use ZAP for security scanning
-            }
-            post {
-                success {
-                    emailext to: 'pm.thuytruc@gmail.com',
-                             subject: "Security Scan: SUCCESS",
-                             body: "Security scan completed successfully.",
-                             attachLog: true
-                }
-                failure {
-                    emailext to: 'pm.thuytruc@gmail.com',
-                             subject: "Security Scan: FAILURE",
-                             body: "Security scan failed.",
-                             attachLog: true
-                }
             }
         }
 
@@ -85,10 +65,9 @@ pipeline {
     }
     post {
         always {
-            emailext to: "pm.thuytruc@gmail.com",
+            mail to: "pm.thuytruc@gmail.com",
                  subject: "Build Status Email",
-                 body: "Build log attached",
-                 attachLog: true
+                 body: "Build log attached"
         }
     }
 }
