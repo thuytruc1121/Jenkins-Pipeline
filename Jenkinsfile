@@ -19,13 +19,13 @@ pipeline {
                     mail to: "pm.thuytruc@gmail.com",
                          subject: "Unit and Integration Tests - Success",
                          body: "The Unit and Integration Tests stage completed successfully.",
-                         attachLog: true
+                         emailext attachLog: true, attachmentsPattern: 'generatedFile.txt'
                 }
                 failure {
                     mail to: "pm.thuytruc@gmail.com",
                          subject: "Unit and Integration Tests - Failure",
                          body: "The Unit and Integration Tests stage failed. Please review the logs.",
-                         attachLog: true
+                         emailext attachLog: true, attachmentsPattern: 'generatedFile.txt'
                 }
             }
         }
@@ -49,13 +49,13 @@ pipeline {
                     mail to: "pm.thuytruc@gmail.com",
                          subject: "Security Scan - Success",
                          body: "The Security Scan stage completed successfully.",
-                         attachLog: true
+                         emailext attachLog: true, attachmentsPattern: 'generatedFile.txt'
                 }
                 failure {
                     mail to: "pm.thuytruc@gmail.com",
                          subject: "Security Scan - Failure",
                          body: "The Security Scan stage failed. Please review the logs.",
-                         attachLog: true
+                         emailext attachLog: true, attachmentsPattern: 'generatedFile.txt'
                 }
             }
         }
@@ -88,7 +88,7 @@ pipeline {
             mail to: "pm.thuytruc@gmail.com",
                  subject: "Pipeline Completion Status",
                  body: "The pipeline has completed with status: ${currentBuild.currentResult}. Please check the logs for details.",
-                 attachLog: true
+                 emailext attachLog: true, attachmentsPattern: 'generatedFile.txt'
         }
     }
 }
