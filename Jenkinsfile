@@ -19,7 +19,6 @@ pipeline {
                     emailext subject: "Test Stage: SUCCESS",
                         body: "The Test stage completed successfully.",
                         to: 'pm.thuytruc@gmail.com'
-                    )
                 }
                 failure {
                     emailext (
