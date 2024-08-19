@@ -15,11 +15,10 @@ pipeline {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
             post {
-                success {
-                    emailext (
-                        subject: "Test Stage: SUCCESS",
+                always {
+                    emailext subject: "Test Stage: SUCCESS",
                         body: "The Test stage completed successfully.",
-                        to: "pm.thuytruc@gmail.com"
+                        to: 'pm.thuytruc@gmail.com'
                     )
                 }
                 failure {
