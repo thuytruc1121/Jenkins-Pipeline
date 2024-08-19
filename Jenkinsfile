@@ -14,6 +14,20 @@ pipeline {
             steps {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
+            post {
+                success {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Unit and Integration Tests - Success",
+                         body: "The Unit and Integration Tests stage completed successfully.",
+                         attachLog: true
+                }
+                failure {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Unit and Integration Tests - Failure",
+                         body: "The Unit and Integration Tests stage failed. Please review the logs.",
+                         attachLog: true
+                }
+            }
         }
 
         // Stage 3: Code Analysis
@@ -29,6 +43,20 @@ pipeline {
             steps {
                 echo "Performing security scan using OWASP ZAP: sh 'zap-cli -t http://localhost:8080'"
                 // Use ZAP for security scanning
+            }
+            post {
+                success {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Security Scan - Success",
+                         body: "The Security Scan stage completed successfully.",
+                         attachLog: true
+                }
+                failure {
+                    mail to: "pm.thuytruc@gmail.com",
+                         subject: "Security Scan - Failure",
+                         body: "The Security Scan stage failed. Please review the logs.",
+                         attachLog: true
+                }
             }
         }
 
@@ -58,8 +86,9 @@ pipeline {
     post {
         always {
             mail to: "pm.thuytruc@gmail.com",
-                 subject: "Build Status Email",
-                 body: "Build log attached"
+                 subject: "Pipeline Completion Status",
+                 body: "The pipeline has completed with status: ${currentBuild.currentResult}. Please check the logs for details.",
+                 attachLog: true
         }
     }
 }
