@@ -15,19 +15,21 @@ pipeline {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
             post {
-                always {
-                    script {
-                        try {
-                            emailext (
-                                subject: "Unit and Integration Tests: SUCCESS",
-                                body: "Tests completed successfully.",
-                                to: "pm.thuytruc@gmail.com",
-                                attachLog: true
-                            )
-                        } catch (Exception e) {
-                            echo "Failed to send email: ${e.message}"
-                        }
-                    }
+                success {
+                    emailext (
+                        subject: "Test Stage: SUCCESS",
+                        body: "The Test stage completed successfully.",
+                        to: "pm.thuytruc@gmail.com",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext (
+                        subject: "Test Stage: FAILURE",
+                        body: "The Test stage failed. Please check the attached log for details.",
+                        to: "pm.thuytruc@gmail.com",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -45,6 +47,24 @@ pipeline {
             steps {
                 echo "Performing security scan using OWASP ZAP: sh 'zap-cli -t http://localhost:8080'"
                 // Use ZAP for security scanning
+            }
+            post {
+                success {
+                    emailext (
+                        subject: "Security Scan: SUCCESS",
+                        body: "The Security Scan stage completed successfully.",
+                        to: "pm.thuytruc@gmail.com",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext (
+                        subject: "Security Scan: FAILURE",
+                        body: "The Security Scan stage failed. Please check the attached log for details.",
+                        to: "pm.thuytruc@gmail.com",
+                        attachLog: true
+                    )
+                }
             }
         }
 
