@@ -15,11 +15,18 @@ pipeline {
                 echo "Running unit and integration tests: sh 'mvn test'"
             }
             post {
-                always {
-                    emailext subject: "Test Stage: SUCCESS",
-                        body: "The Test stage completed successfully.",
-                        to: 'pm.thuytruc@gmail.com',
-                        attachLog: true
+                success {
+                    mail(
+                        bcc: '',
+                        body: "<p>The Test stage completed successfully.</p>",
+                        cc: '',
+                        charset: 'UTF-8',
+                        from: '',
+                        mimeType: 'text/html',
+                        replyTo: '',
+                        subject: "Test Stage: SUCCESS",
+                        to: "pm.thuytruc@gmail.com"
+)
                 }
                 failure {
                     emailext (
