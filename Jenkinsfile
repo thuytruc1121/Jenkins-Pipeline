@@ -65,11 +65,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            mail to: "pm.thuytruc@gmail.com",
-                 subject: "Build Status Email",
-                 body: "Build log attached"
-        }
-    }
 }
