@@ -4,7 +4,8 @@ pipeline {
         // Stage 1: Build
         stage('Build') {
             steps {
-                echo "Building the application using Maven: sh 'mvn clean package'"
+                echo "Building the application using Maven"
+                sh 'mvn clean package'
                 // Example build tool: Maven
             }
         }
@@ -12,7 +13,8 @@ pipeline {
         // Stage 2: Unit and Integration Tests
         stage('Unit and Integration Tests') {
             steps {
-                echo "Running unit and integration tests: sh 'mvn test'"
+                echo "Running unit and integration tests"
+                sh 'mvn test'
             }
             post {
                 success {
@@ -35,7 +37,8 @@ pipeline {
         // Stage 3: Code Analysis
         stage('Code Analysis') {
             steps {
-                echo "Performing code analysis: sh 'sonar-scanner'"
+                echo "Performing code analysis"
+                sh 'sonar-scanner'
                 // Example code analysis tool: SonarQube
             }
         }
@@ -43,7 +46,8 @@ pipeline {
         // Stage 4: Security Scan
         stage('Security Scan') {
             steps {
-                echo "Performing security scan using OWASP ZAP: sh 'zap-cli -t http://localhost:8080'"
+                echo "Performing security scan using OWASP ZAP"
+                sh 'zap-cli -t http://localhost:8080'
                 // Use ZAP for security scanning
             }
             post {
@@ -67,7 +71,8 @@ pipeline {
         // Stage 5: Deploy to Staging
         stage('Deploy to Staging') {
             steps {
-                echo "Deploying to staging environment: sh 'aws ec2 run-instances ...'"
+                echo "Deploying to staging environment"
+                sh 'aws ec2 run-instances ...'
                 // Use AWS CLI for deployment
             }
         }
@@ -75,14 +80,16 @@ pipeline {
         // Stage 6: Integration Tests on Staging
         stage('Integration Tests on Staging') {
             steps {
-                echo "Running integration tests on the staging environment: Postman"
+                echo "Running integration tests on the staging environment"
+                // Add your Postman or other testing commands here
             }
         }
 
         // Stage 7: Deploy to Production
         stage('Deploy to Production') {
             steps {
-                echo "Deploying to production: sh 'aws ec2 run-instances ...'"
+                echo "Deploying to production"
+                sh 'aws ec2 run-instances ...'
                 // Use AWS CLI for deployment
             }
         }
